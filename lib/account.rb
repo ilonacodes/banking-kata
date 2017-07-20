@@ -6,21 +6,23 @@ class Account
 
   def print_statement
     header = "Date\t\tAmount\tBalance\n"
-    # rows = Date.today.strftime("%m/%d/%Y") + "\t\t100\t100"
+    current_date = Date.today.strftime("%m/%d/%Y")
+    balance = 0
+
     rows = transactions.map do |amount|
-      Date.today.strftime("%m/%d/%Y") + "\t\t" + amount.to_s + "\t100"
+      balance += amount
+      current_date + "\t\t" + amount.to_s + "\t" + balance.to_s
     end
 
-    string = ""
-    rows.each do |row|
-      string += row
-    end
-
-    header + string
+    header + rows.join("\n")
   end
 
   def deposit(amount)
     transactions.push(amount)
+  end
+
+  def withdraw(amount)
+    transactions.push(-amount)
   end
 
   private
